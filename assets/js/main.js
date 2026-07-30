@@ -526,28 +526,43 @@
     const keys = Object.keys(data).reverse(); // Newest first
     if (inboxCountBadge) inboxCountBadge.textContent = `${keys.length} Messages`;
 
-    let html = '';
-    keys.forEach(key => {
+    let rowsHtml = '';
+    keys.forEach((key, index) => {
       const msg = data[key];
-      const dateStr = msg.createdAt ? new Date(msg.createdAt).toLocaleString() : (msg.timestamp ? new Date(msg.timestamp).toLocaleString() : 'N/A');
-      html += `
-        <div class="message-card">
-          <div class="d-flex justify-content-between align-items-start mb-2">
-            <div>
-              <h6 class="text-white fw-bold mb-1"><i class="bi bi-person-fill text-info me-1"></i>${escapeHtml(msg.name || 'Anonymous')}</h6>
-              <a href="mailto:${escapeHtml(msg.email || '')}" class="text-info small text-decoration-none me-3"><i class="bi bi-envelope me-1"></i>${escapeHtml(msg.email || 'No email')}</a>
-              <span class="text-muted small"><i class="bi bi-clock me-1"></i>${dateStr}</span>
-            </div>
+      const dateStr = msg.createdAt ? new Date(msg.createdAt).toLocaleDateString() + ' ' + new Date(msg.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : (msg.timestamp ? new Date(msg.timestamp).toLocaleDateString() : 'N/A');
+      rowsHtml += `
+        <tr>
+          <td class="text-muted small align-middle">${index + 1}</td>
+          <td class="align-middle"><span class="fw-bold text-white small">${escapeHtml(msg.name || 'Anonymous')}</span></td>
+          <td class="align-middle"><a href="mailto:${escapeHtml(msg.email || '')}" class="text-info small text-decoration-none">${escapeHtml(msg.email || '-')}</a></td>
+          <td class="align-middle"><span class="badge bg-dark border border-secondary text-info text-wrap text-start fw-normal small">${escapeHtml(msg.subject || 'No Subject')}</span></td>
+          <td class="align-middle text-light small" style="max-width: 250px; word-break: break-word;">${escapeHtml(msg.message || '')}</td>
+          <td class="text-muted small align-middle" style="white-space: nowrap;">${dateStr}</td>
+          <td class="align-middle text-center">
             <button onclick="deleteFirebaseMessage('${key}')" class="btn btn-sm btn-outline-danger border-0" title="Delete Message"><i class="bi bi-trash"></i></button>
-          </div>
-          <div class="bg-dark p-2 rounded border border-secondary mb-2">
-            <span class="text-white fw-semibold small">Subject:</span> <span class="text-light small">${escapeHtml(msg.subject || 'No Subject')}</span>
-          </div>
-          <p class="text-light small mb-0 style-message-body">${escapeHtml(msg.message || '')}</p>
-        </div>`;
+          </td>
+        </tr>`;
     });
 
-    inboxContainer.innerHTML = html;
+    inboxContainer.innerHTML = `
+      <div class="table-responsive">
+        <table class="table table-dark table-hover border-secondary align-middle mb-0" style="font-size: 0.88rem;">
+          <thead class="table-active">
+            <tr>
+              <th scope="col" style="width: 40px;">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Subject</th>
+              <th scope="col">Message</th>
+              <th scope="col" style="min-width: 130px;">Date &amp; Time</th>
+              <th scope="col" class="text-center" style="width: 60px;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rowsHtml}
+          </tbody>
+        </table>
+      </div>`;
   }
 
   window.deleteFirebaseMessage = async function(key) {
