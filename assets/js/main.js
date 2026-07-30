@@ -421,4 +421,155 @@
     });
   }
 
+  /**
+   * Password-Protected Admin Firebase Inbox Logic
+   */
+  const ADMIN_PASSCODE = 'Husna901!@';
+  let isAuthenticated = false;
+
+  const messagesNavBtn = select('#messagesNavBtn');
+  const adminPassModal = select('#adminPassModal');
+  const adminInboxModal = select('#adminInboxModal');
+  const adminPassForm = select('#adminPassForm');
+  const adminPassInput = select('#adminPassInput');
+  const passAuthError = select('#passAuthError');
+  const inboxContainer = select('#inboxContainer');
+  const inboxCountBadge = select('#inboxCountBadge');
+  const refreshInboxBtn = select('#refreshInboxBtn');
+
+  const getPassModal = () => bootstrap.Modal.getOrCreateInstance(adminPassModal);
+  const getInboxModal = () => bootstrap.Modal.getOrCreateInstance(adminInboxModal);
+
+  if (messagesNavBtn) {
+    messagesNavBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (isAuthenticated) {
+        getInboxModal().show();
+        fetchFirebaseMessages();
+      } else {
+        if (passAuthError) passAuthError.style.display = 'none';
+        if (adminPassInput) adminPassInput.value = '';
+        getPassModal().show();
+      }
+    });
+  }
+
+  if (adminPassForm) {
+    adminPassForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const entered = adminPassInput ? adminPassInput.value.trim() : '';
+      if (entered === ADMIN_PASSCODE) {
+        isAuthenticated = true;
+        if (passAuthError) passAuthError.style.display = 'none';
+        getPassModal().hide();
+        getInboxModal().show();
+        fetchFirebaseMessages();
+      } else {
+        if (passAuthError) passAuthError.style.display = 'block';
+      }
+    });
+  }
+
+  if (refreshInboxBtn) {
+    refreshInboxBtn.addEventListener('click', function() {
+      fetchFirebaseMessages();
+    });
+  }
+
+  async function fetchFirebaseMessages() {
+    if (!inboxContainer) return;
+    inboxContainer.innerHTML = `
+      <div class="text-center text-muted py-4">
+        <div class="spinner-border text-info mb-2" role="status"></div>
+        <p>Fetching messages from Firebase Realtime Database...</p>
+      </div>`;
+
+    let data = null;
+
+    // Try SDK
+    if (typeof firebase !== 'undefined' && firebase.database) {
+      try {
+        const snap = await firebase.database().ref('messages').once('value');
+        data = snap.val();
+      } catch (err) {
+        console.warn('SDK fetch failed, trying REST API fallback...', err);
+      }
+    }
+
+    // Try REST Fallback
+    if (!data) {
+      try {
+        const res = await fetch("https://web-prof-4a520-default-rtdb.firebaseio.com/messages.json");
+        if (res.ok) {
+          data = await res.json();
+        }
+      } catch (err) {
+        console.error('REST fetch failed:', err);
+      }
+    }
+
+    renderInboxMessages(data);
+  }
+
+  function renderInboxMessages(data) {
+    if (!data || Object.keys(data).length === 0) {
+      if (inboxCountBadge) inboxCountBadge.textContent = '0 Messages';
+      inboxContainer.innerHTML = `
+        <div class="text-center text-muted py-5">
+          <i class="bi bi-inbox fs-1 text-secondary mb-3 d-block"></i>
+          <h5>No messages yet</h5>
+          <p class="small">Contact form submissions from your website will appear here in real-time.</p>
+        </div>`;
+      return;
+    }
+
+    const keys = Object.keys(data).reverse(); // Newest first
+    if (inboxCountBadge) inboxCountBadge.textContent = `${keys.length} Messages`;
+
+    let html = '';
+    keys.forEach(key => {
+      const msg = data[key];
+      const dateStr = msg.createdAt ? new Date(msg.createdAt).toLocaleString() : (msg.timestamp ? new Date(msg.timestamp).toLocaleString() : 'N/A');
+      html += `
+        <div class="message-card">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div>
+              <h6 class="text-white fw-bold mb-1"><i class="bi bi-person-fill text-info me-1"></i>${escapeHtml(msg.name || 'Anonymous')}</h6>
+              <a href="mailto:${escapeHtml(msg.email || '')}" class="text-info small text-decoration-none me-3"><i class="bi bi-envelope me-1"></i>${escapeHtml(msg.email || 'No email')}</a>
+              <span class="text-muted small"><i class="bi bi-clock me-1"></i>${dateStr}</span>
+            </div>
+            <button onclick="deleteFirebaseMessage('${key}')" class="btn btn-sm btn-outline-danger border-0" title="Delete Message"><i class="bi bi-trash"></i></button>
+          </div>
+          <div class="bg-dark p-2 rounded border border-secondary mb-2">
+            <span class="text-white fw-semibold small">Subject:</span> <span class="text-light small">${escapeHtml(msg.subject || 'No Subject')}</span>
+          </div>
+          <p class="text-light small mb-0 style-message-body">${escapeHtml(msg.message || '')}</p>
+        </div>`;
+    });
+
+    inboxContainer.innerHTML = html;
+  }
+
+  window.deleteFirebaseMessage = async function(key) {
+    if (!confirm('Are you sure you want to delete this message from Firebase?')) return;
+    try {
+      if (typeof firebase !== 'undefined' && firebase.database) {
+        await firebase.database().ref(`messages/${key}`).remove();
+      } else {
+        await fetch(`https://web-prof-4a520-default-rtdb.firebaseio.com/messages/${key}.json`, { method: 'DELETE' });
+      }
+      fetchFirebaseMessages();
+    } catch (err) {
+      alert('Failed to delete message: ' + err.message);
+    }
+  };
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
 })();
