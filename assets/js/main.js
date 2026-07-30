@@ -330,23 +330,89 @@
   });
 
   /**
-   * Contact Form Submission Handling
+   * Firebase Realtime Database Integration & Contact Form Handling
    */
+  const firebaseConfig = {
+    databaseURL: "https://web-prof-4a520-default-rtdb.firebaseio.com",
+    projectId: "web-prof-4a520"
+  };
+
+  if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+    try {
+      firebase.initializeApp(firebaseConfig);
+    } catch (err) {
+      console.warn('Firebase init warning:', err);
+    }
+  }
+
   const contactForm = select('#contactForm');
   if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       const formToast = select('#formToast');
       const submitBtn = contactForm.querySelector('button[type="submit"]');
 
+      const name = contactForm.querySelector('#name')?.value || '';
+      const email = contactForm.querySelector('#email')?.value || '';
+      const subject = contactForm.querySelector('#subject')?.value || '';
+      const message = contactForm.querySelector('textarea[name="message"]')?.value || '';
+
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Message Received!';
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Sending...';
 
-      formToast.className = 'toast-feedback success';
-      formToast.style.display = 'block';
-      formToast.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>Thank you! Your message has been sent successfully. I will get back to you shortly.';
+      const payload = {
+        name,
+        email,
+        subject,
+        message,
+        createdAt: new Date().toISOString(),
+        timestamp: Date.now()
+      };
 
-      contactForm.reset();
+      let success = false;
+
+      // Method 1: Firebase SDK
+      if (typeof firebase !== 'undefined' && firebase.database) {
+        try {
+          await firebase.database().ref('messages').push(payload);
+          success = true;
+        } catch (sdkError) {
+          console.warn('Firebase SDK submit failed, trying REST API fallback...', sdkError);
+        }
+      }
+
+      // Method 2: Firebase REST API Fallback
+      if (!success) {
+        try {
+          const res = await fetch("https://web-prof-4a520-default-rtdb.firebaseio.com/messages.json", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (res.ok) {
+            success = true;
+          }
+        } catch (fetchErr) {
+          console.error('Firebase REST API error:', fetchErr);
+        }
+      }
+
+      if (success) {
+        submitBtn.textContent = 'Message Sent!';
+        if (formToast) {
+          formToast.className = 'toast-feedback success';
+          formToast.style.display = 'block';
+          formToast.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>Thank you! Your message has been saved to Firebase Realtime Database. I will get back to you shortly.';
+        }
+        contactForm.reset();
+      } else {
+        submitBtn.textContent = 'Send Message';
+        if (formToast) {
+          formToast.className = 'toast-feedback error';
+          formToast.style.display = 'block';
+          formToast.innerHTML = '<i class="bi bi-exclamation-triangle-fill me-2"></i>Submission error. Please check your Firebase Database Rules.';
+        }
+      }
 
       setTimeout(() => {
         submitBtn.disabled = false;
