@@ -678,14 +678,15 @@ section.section-show {
 .about-me ul li {
   margin-bottom: 12px;
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 10px;
   color: var(--text-muted);
 }
 
 .about-me ul li strong {
   color: var(--text-main);
-  min-width: 90px;
+  min-width: 115px;
+  flex-shrink: 0;
 }
 
 .about-me ul li i {
