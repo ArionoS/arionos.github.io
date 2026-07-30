@@ -5,16 +5,17 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Portfolio Details - Personal Bootstrap Template</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  <title>Project Details | Ariono Septian Portfolio</title>
+  <meta content="Project details and technical architecture overview." name="description">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <!-- Modern Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -24,92 +25,79 @@
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  <!-- Template Main CSS File -->
+  <!-- Modern Design System CSS -->
   <link href="assets/css/style.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: Personal - v4.7.0
-  * Template URL: https://bootstrapmade.com/personal-free-resume-bootstrap-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
-<body>
+<body style="padding-top: 40px;">
 
   <main id="main">
-
-    <!-- ======= Portfolio Details ======= -->
     <div id="portfolio-details" class="portfolio-details">
       <div class="container">
 
-        <div class="row">
+        <div class="mb-4">
+          <a href="index.html#portfolio" class="btn-outline-custom">
+            <i class="bi bi-arrow-left"></i> Back to Portfolio
+          </a>
+        </div>
 
+        <div class="row g-4">
           <div class="col-lg-8">
-            <h2 class="portfolio-title">This is an example of portfolio detail</h2>
+            <h2 class="portfolio-title h3 font-weight-bold text-white mb-3">Enterprise Software &amp; Application Architecture</h2>
 
-            <div class="portfolio-details-slider swiper">
+            <div class="portfolio-details-slider swiper rounded-3 overflow-hidden border border-secondary">
               <div class="swiper-wrapper align-items-center">
 
                 <div class="swiper-slide">
-                  <img src="assets/img/portfolio/portfolio-details-1.jpg" alt="">
+                  <img src="assets/img/portfolio/portfolio-details-1.jpg" class="img-fluid w-100" alt="Project Screenshot 1">
                 </div>
 
                 <div class="swiper-slide">
-                  <img src="assets/img/portfolio/portfolio-details-2.jpg" alt="">
+                  <img src="assets/img/portfolio/portfolio-details-2.jpg" class="img-fluid w-100" alt="Project Screenshot 2">
                 </div>
 
                 <div class="swiper-slide">
-                  <img src="assets/img/portfolio/portfolio-details-3.jpg" alt="">
+                  <img src="assets/img/portfolio/portfolio-details-3.jpg" class="img-fluid w-100" alt="Project Screenshot 3">
                 </div>
 
               </div>
               <div class="swiper-pagination"></div>
             </div>
-
           </div>
 
-          <div class="col-lg-4 portfolio-info">
-            <h3>Project information</h3>
-            <ul>
-              <li><strong>Category</strong>: Web design</li>
-              <li><strong>Client</strong>: ASU Company</li>
-              <li><strong>Project date</strong>: 01 March, 2020</li>
-              <li><strong>Project URL</strong>: <a href="#">www.example.com</a></li>
-            </ul>
+          <div class="col-lg-4">
+            <div class="glass-card">
+              <h3 class="h4 text-primary font-weight-bold mb-3">Project Specifications</h3>
+              <ul class="list-unstyled text-muted font-size-sm">
+                <li class="mb-2"><strong class="text-white">Category:</strong> Web &amp; Mobile Software Architecture</li>
+                <li class="mb-2"><strong class="text-white">Tech Stack:</strong> PHP, Laravel, Flutter, MySQL, Docker</li>
+                <li class="mb-2"><strong class="text-white">Repository:</strong> <a href="https://github.com/ArionoS" target="_blank" rel="noopener">github.com/ArionoS</a></li>
+              </ul>
 
-            <p>
-              Autem ipsum nam porro corporis rerum. Quis eos dolorem eos itaque inventore commodi labore quia quia. Exercitationem repudiandae officiis neque suscipit non officia eaque itaque enim. Voluptatem officia accusantium nesciunt est omnis tempora consectetur dignissimos. Sequi nulla at esse enim cum deserunt eius.
-            </p>
+              <hr class="border-secondary my-3">
+
+              <p class="text-muted small">
+                High-performance application engineered with modular architecture, clean RESTful endpoints, secure data persistence, and responsive UI components.
+              </p>
+            </div>
           </div>
-
         </div>
 
       </div>
-    </div><!-- End Portfolio Details -->
+    </div>
+  </main>
 
-  </main><!-- End #main -->
-
-  <div class="credits">
-    <!-- All the links in the footer should remain intact. -->
-    <!-- You can delete the links only if you purchased the pro version. -->
-    <!-- Licensing information: https://bootstrapmade.com/license/ -->
-    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/personal-free-resume-bootstrap-template/ -->
-    Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+  <div class="credits text-center py-4">
+    <p>&copy; Ariono Septian. All Rights Reserved.</p>
   </div>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
 
-  <!-- Template Main JS File -->
+  <!-- Main JS -->
   <script src="assets/js/main.js"></script>
 
 </body>
-
 </html>
