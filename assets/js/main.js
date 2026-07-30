@@ -511,6 +511,18 @@
     renderInboxMessages(data);
   }
 
+  function formatMsgDate(msg) {
+    const raw = msg.createdAt || msg.timestamp || msg.date;
+    if (!raw) return 'N/A';
+    try {
+      const d = new Date(raw);
+      if (isNaN(d.getTime())) return String(raw);
+      return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    } catch (e) {
+      return String(raw);
+    }
+  }
+
   function renderInboxMessages(data) {
     if (!data || Object.keys(data).length === 0) {
       if (inboxCountBadge) inboxCountBadge.textContent = '0 Messages';
@@ -529,15 +541,15 @@
     let rowsHtml = '';
     keys.forEach((key, index) => {
       const msg = data[key];
-      const dateStr = msg.createdAt ? new Date(msg.createdAt).toLocaleDateString() + ' ' + new Date(msg.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : (msg.timestamp ? new Date(msg.timestamp).toLocaleDateString() : 'N/A');
+      const dateStr = formatMsgDate(msg);
       rowsHtml += `
         <tr>
-          <td class="text-muted small align-middle">${index + 1}</td>
+          <td class="fw-bold text-info small align-middle text-center">${index + 1}</td>
           <td class="align-middle"><span class="fw-bold text-white small">${escapeHtml(msg.name || 'Anonymous')}</span></td>
           <td class="align-middle"><a href="mailto:${escapeHtml(msg.email || '')}" class="text-info small text-decoration-none">${escapeHtml(msg.email || '-')}</a></td>
           <td class="align-middle"><span class="badge bg-dark border border-secondary text-info text-wrap text-start fw-normal small">${escapeHtml(msg.subject || 'No Subject')}</span></td>
           <td class="align-middle text-light small" style="max-width: 250px; word-break: break-word;">${escapeHtml(msg.message || '')}</td>
-          <td class="text-muted small align-middle" style="white-space: nowrap;">${dateStr}</td>
+          <td class="text-light small align-middle" style="white-space: nowrap;">${dateStr}</td>
           <td class="align-middle text-center">
             <button onclick="deleteFirebaseMessage('${key}')" class="btn btn-sm btn-outline-danger border-0" title="Delete Message"><i class="bi bi-trash"></i></button>
           </td>
