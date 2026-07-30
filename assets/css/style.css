@@ -1016,7 +1016,7 @@ section.section-show {
   border-radius: 16px;
   overflow: hidden;
   position: relative;
-  height: 480px; /* Fixed height for consistent card sizing */
+  height: 470px;
   display: flex;
   flex-direction: column;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
@@ -1112,20 +1112,31 @@ section.section-show {
   font-weight: 700;
   margin-bottom: 6px;
   color: #ffffff;
+  min-height: 2.5rem;
+  display: flex;
+  align-items: center;
 }
 
 .portfolio-info p {
   color: var(--text-muted);
   font-size: 0.85rem;
   margin-bottom: 12px;
+  min-height: 85px;
 }
 
 .portfolio-tags {
   display: flex;
   gap: 6px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 2px;
   margin-bottom: 14px;
-  margin-top: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.portfolio-tags::-webkit-scrollbar {
+  display: none;
 }
 
 .portfolio-tag {
@@ -1135,11 +1146,14 @@ section.section-show {
   padding: 2px 10px;
   border-radius: 12px;
   font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .portfolio-links {
   display: flex;
   gap: 12px;
+  margin-top: auto;
 }
 
 .portfolio-links a {
