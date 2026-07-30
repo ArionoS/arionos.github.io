@@ -916,7 +916,49 @@ section.section-show {
   border-radius: 16px;
   overflow: hidden;
   position: relative;
+  height: 480px; /* Fixed height for consistent card sizing */
+  display: flex;
+  flex-direction: column;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.portfolio-gallery-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 10;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.portfolio-nav-btn {
+  color: #fff;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.portfolio-swiper:hover .portfolio-nav-btn {
+  opacity: 1;
+}
+
+.portfolio-nav-btn::after {
+  font-size: 14px !important;
+  font-weight: bold;
 }
 
 .portfolio-wrap.filter-animate {
@@ -953,6 +995,9 @@ section.section-show {
 
 .portfolio-info {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .portfolio-info h4 {
@@ -973,6 +1018,7 @@ section.section-show {
   gap: 6px;
   flex-wrap: wrap;
   margin-bottom: 14px;
+  margin-top: auto;
 }
 
 .portfolio-tag {

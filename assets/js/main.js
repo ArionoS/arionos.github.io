@@ -204,31 +204,53 @@
    * Testimonials Swiper Initialization
    */
   const initSwiper = () => {
-    if (typeof Swiper !== 'undefined' && select('.testimonials-slider')) {
-      new Swiper('.testimonials-slider', {
-        speed: 600,
-        loop: true,
-        autoplay: {
-          delay: 5000,
-          disableOnInteraction: false
-        },
-        slidesPerView: 'auto',
-        pagination: {
-          el: '.swiper-pagination',
-          type: 'bullets',
-          clickable: true
-        },
-        breakpoints: {
-          320: {
-            slidesPerView: 1,
-            spaceBetween: 20
+    if (typeof Swiper !== 'undefined') {
+      if (select('.testimonials-slider')) {
+        new Swiper('.testimonials-slider', {
+          speed: 600,
+          loop: true,
+          autoplay: {
+            delay: 5000,
+            disableOnInteraction: false
           },
-          1200: {
-            slidesPerView: 2,
-            spaceBetween: 30
+          slidesPerView: 'auto',
+          pagination: {
+            el: '.swiper-pagination',
+            type: 'bullets',
+            clickable: true
+          },
+          breakpoints: {
+            320: {
+              slidesPerView: 1,
+              spaceBetween: 20
+            },
+            1200: {
+              slidesPerView: 2,
+              spaceBetween: 30
+            }
           }
-        }
-      });
+        });
+      }
+      
+      if (select('.portfolio-swiper')) {
+        new Swiper('.portfolio-swiper', {
+          speed: 600,
+          loop: true,
+          autoplay: {
+            delay: 4000,
+            disableOnInteraction: false
+          },
+          pagination: {
+            el: '.swiper-pagination',
+            type: 'bullets',
+            clickable: true
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          }
+        });
+      }
     }
   };
 
