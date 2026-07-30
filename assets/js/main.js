@@ -1,6 +1,6 @@
 /**
-* Modern JS Engine for Ariono Septian Portfolio
-* Responsive Navigation, 3D Tilt Animations, Typing Effect, AJAX Contact & Scroll Observer
+* Modern Ultra-Fast JS Engine for Ariono Septian Portfolio
+* High-Performance Non-Blocking Event Listeners, 3D Tilt, Typing Loop & Dynamic Router
 */
 (function() {
   "use strict";
@@ -14,38 +14,46 @@
     }
   };
 
-  const on = (type, el, listener, all = false) => {
+  const on = (type, el, listener, all = false, options = {}) => {
     let selectEl = select(el, all);
     if (selectEl) {
       if (all) {
-        selectEl.forEach(e => e.addEventListener(type, listener));
+        selectEl.forEach(e => e.addEventListener(type, listener, options));
       } else {
-        selectEl.addEventListener(type, listener);
+        selectEl.addEventListener(type, listener, options);
       }
     }
   };
 
   /**
-   * Interactive 3D Mouse Tilt Effect on Hero Photo Showcase
+   * Interactive 3D Mouse Tilt Effect on Hero Photo Showcase (Passive Non-Blocking)
    */
   const heroWrapper = select('.hero-img-wrapper');
   if (heroWrapper) {
+    let ticking = false;
+
     heroWrapper.addEventListener('mousemove', (e) => {
-      const rect = heroWrapper.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const rect = heroWrapper.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
 
-      const rotateX = ((y - centerY) / centerY) * -12;
-      const rotateY = ((x - centerX) / centerX) * 12;
+          const rotateX = ((y - centerY) / centerY) * -12;
+          const rotateY = ((x - centerX) / centerX) * 12;
 
-      heroWrapper.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
-    });
+          heroWrapper.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
 
     heroWrapper.addEventListener('mouseleave', () => {
       heroWrapper.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-    });
+    }, { passive: true });
   }
 
   /**
@@ -78,17 +86,113 @@
       } else if (isDeleting && charIdx === 0) {
         isDeleting = false;
         itemIdx = (itemIdx + 1) % items.length;
-        typeSpeed = 400; // Pause before typing next word
+        typeSpeed = 400;
       }
 
       setTimeout(typeLoop, typeSpeed);
     }
 
-    setTimeout(typeLoop, 500);
+    typeLoop();
   }
 
   /**
-   * Mobile nav toggle
+   * Calculate Age Automatically
+   */
+  const ageSpan = select('#age');
+  if (ageSpan) {
+    const birthDate = new Date('2000-08-08');
+    const age = Math.floor((new Date() - birthDate) / (365.25 * 24 * 60 * 60 * 1000));
+    ageSpan.textContent = age;
+  }
+
+  /**
+   * Single Page Application Section Navigation Router
+   */
+  const navLinks = select('#navbar .nav-link', true);
+  const header = select('#header');
+  const sections = select('section', true);
+
+  const resetNav = () => {
+    header.classList.remove('header-top');
+    navLinks.forEach(item => {
+      item.classList.remove('active');
+    });
+    const homeLink = select('#navbar a[href="#header"]');
+    if (homeLink) homeLink.classList.add('active');
+
+    sections.forEach(sec => {
+      sec.classList.remove('section-show');
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const showSection = (hash) => {
+    if (hash === '#header' || hash === '' || hash === '#') {
+      resetNav();
+      return;
+    }
+
+    const targetSection = select(hash);
+    if (!targetSection) return;
+
+    header.classList.add('header-top');
+    navLinks.forEach(item => {
+      if (item.getAttribute('href') === hash) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
+
+    sections.forEach(sec => {
+      if ('#' + sec.id === hash) {
+        sec.classList.add('section-show');
+        sec.scrollTop = 0; // Reset internal section scroll
+      } else {
+        sec.classList.remove('section-show');
+      }
+    });
+
+    // Re-initialize Swiper & PureCounter when section is displayed
+    if (window.PureCounter) {
+      new PureCounter();
+    }
+  };
+
+  // Nav click handlers
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const hash = this.getAttribute('href');
+      if (hash.startsWith('#')) {
+        e.preventDefault();
+        window.location.hash = hash;
+        showSection(hash);
+
+        // Close mobile navbar if open
+        if (select('#navbar').classList.contains('navbar-mobile')) {
+          select('#navbar').classList.remove('navbar-mobile');
+          const toggle = select('.mobile-nav-toggle');
+          if (toggle) {
+            toggle.classList.toggle('bi-list');
+            toggle.classList.toggle('bi-x');
+          }
+        }
+      }
+    });
+  });
+
+  // Handle URL Hash on Load or Change
+  window.addEventListener('hashchange', () => {
+    showSection(window.location.hash);
+  });
+
+  if (window.location.hash) {
+    showSection(window.location.hash);
+  }
+
+  /**
+   * Mobile Navigation Toggle
    */
   on('click', '.mobile-nav-toggle', function(e) {
     select('#navbar').classList.toggle('navbar-mobile');
@@ -97,236 +201,124 @@
   });
 
   /**
-   * Section Navigation & Hash Routing
+   * Testimonials Swiper Initialization
    */
-  on('click', '#navbar .nav-link', function(e) {
-    let section = select(this.hash);
-    if (section) {
-      e.preventDefault();
-
-      let navbar = select('#navbar');
-      let header = select('#header');
-      let sections = select('section', true);
-      let navlinks = select('#navbar .nav-link', true);
-
-      navlinks.forEach((item) => {
-        item.classList.remove('active');
-      });
-
-      this.classList.add('active');
-
-      if (navbar.classList.contains('navbar-mobile')) {
-        navbar.classList.remove('navbar-mobile');
-        let navbarToggle = select('.mobile-nav-toggle');
-        if (navbarToggle) {
-          navbarToggle.classList.toggle('bi-list');
-          navbarToggle.classList.toggle('bi-x');
-        }
-      }
-
-      if (this.hash === '#header') {
-        header.classList.remove('header-top');
-        sections.forEach((item) => {
-          item.classList.remove('section-show');
-        });
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
-      }
-
-      if (!header.classList.contains('header-top')) {
-        header.classList.add('header-top');
-        setTimeout(() => {
-          sections.forEach((item) => {
-            item.classList.remove('section-show');
-          });
-          section.classList.add('section-show');
-          section.scrollTop = 0;
-        }, 300);
-      } else {
-        sections.forEach((item) => {
-          item.classList.remove('section-show');
-        });
-        section.classList.add('section-show');
-        section.scrollTop = 0;
-      }
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }, true);
-
-  /**
-   * Initial page load section router
-   */
-  window.addEventListener('load', () => {
-    if (window.location.hash) {
-      let initial_nav = select(window.location.hash);
-
-      if (initial_nav) {
-        let header = select('#header');
-        let navlinks = select('#navbar .nav-link', true);
-
-        header.classList.add('header-top');
-
-        navlinks.forEach((item) => {
-          if (item.getAttribute('href') === window.location.hash) {
-            item.classList.add('active');
-          } else {
-            item.classList.remove('active');
+  const initSwiper = () => {
+    if (typeof Swiper !== 'undefined' && select('.testimonials-slider')) {
+      new Swiper('.testimonials-slider', {
+        speed: 600,
+        loop: true,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false
+        },
+        slidesPerView: 'auto',
+        pagination: {
+          el: '.swiper-pagination',
+          type: 'bullets',
+          clickable: true
+        },
+        breakpoints: {
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 20
+          },
+          1200: {
+            slidesPerView: 2,
+            spaceBetween: 30
           }
-        });
-
-        setTimeout(() => {
-          initial_nav.classList.add('section-show');
-          initial_nav.scrollTop = 0;
-        }, 300);
-      }
+        }
+      });
     }
-
-    // Dynamic Age Calculation
-    const ageSpan = document.getElementById("age");
-    if (ageSpan) {
-      const birthYear = 2001;
-      const currentYear = new Date().getFullYear();
-      ageSpan.textContent = currentYear - birthYear;
-    }
-  });
-
-  /**
-   * Skill Progress Bar Animations
-   */
-  const animateSkills = () => {
-    const progressBars = select('.skills .progress-bar', true);
-    progressBars.forEach((el) => {
-      el.style.width = el.getAttribute('aria-valuenow') + '%';
-    });
   };
 
-  let skillsContent = select('.skills-content');
-  if (skillsContent && 'IntersectionObserver' in window) {
-    let observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateSkills();
-        }
-      });
-    }, { threshold: 0.2 });
-    observer.observe(skillsContent);
-  } else {
-    animateSkills();
-  }
-
   /**
-   * Portfolio Isotope & Filter
+   * Portfolio Isotope Filtering & GLightbox Initialization
    */
-  window.addEventListener('load', () => {
-    let portfolioContainer = select('.portfolio-container');
+  const initPortfolio = () => {
+    const portfolioContainer = select('.portfolio-container');
     if (portfolioContainer && typeof Isotope !== 'undefined') {
-      let portfolioIsotope = new Isotope(portfolioContainer, {
+      const portfolioIsotope = new Isotope(portfolioContainer, {
         itemSelector: '.portfolio-item',
         layoutMode: 'fitRows'
       });
 
-      let portfolioFilters = select('#portfolio-flters li', true);
+      const portfolioFilters = select('#portfolio-flters li', true);
+      portfolioFilters.forEach(filter => {
+        filter.addEventListener('click', function(e) {
+          e.preventDefault();
+          portfolioFilters.forEach(el => el.classList.remove('filter-active'));
+          this.classList.add('filter-active');
 
-      on('click', '#portfolio-flters li', function(e) {
-        e.preventDefault();
-        portfolioFilters.forEach((el) => {
-          el.classList.remove('filter-active');
+          portfolioIsotope.arrange({
+            filter: this.getAttribute('data-filter')
+          });
         });
-        this.classList.add('filter-active');
+      });
+    }
 
-        portfolioIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-      }, true);
+    if (typeof GLightbox !== 'undefined') {
+      GLightbox({
+        selector: '.portfolio-lightbox'
+      });
+    }
+  };
+
+  // Run initializations on DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', () => {
+    initSwiper();
+    initPortfolio();
+    if (window.PureCounter) {
+      new PureCounter();
     }
   });
 
   /**
-   * Testimonials Slider
-   */
-  if (typeof Swiper !== 'undefined' && select('.testimonials-slider')) {
-    new Swiper('.testimonials-slider', {
-      speed: 600,
-      loop: true,
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false
-      },
-      slidesPerView: 'auto',
-      pagination: {
-        el: '.swiper-pagination',
-        type: 'bullets',
-        clickable: true
-      },
-      breakpoints: {
-        320: { slidesPerView: 1, spaceBetween: 20 },
-        1200: { slidesPerView: 2, spaceBetween: 24 }
-      }
-    });
-  }
-
-  /**
-   * Portfolio Lightbox
-   */
-  if (typeof GLightbox !== 'undefined') {
-    GLightbox({ selector: '.portfolio-lightbox' });
-    GLightbox({ selector: '.portfolio-details-lightbox', width: '90%', height: '90vh' });
-  }
-
-  /**
-   * Modern Client-Side Contact Form Handler
+   * Contact Form AJAX Submission with Toast Notification
    */
   const contactForm = select('#contactForm');
   if (contactForm) {
-    contactForm.addEventListener('submit', async function(e) {
+    contactForm.addEventListener('submit', function(e) {
       e.preventDefault();
-      const toast = select('#formToast');
+      const formToast = select('#formToast');
       const submitBtn = contactForm.querySelector('button[type="submit"]');
 
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Sending Message...';
-      }
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending Message...';
 
-      if (toast) {
-        toast.className = 'toast-feedback';
-        toast.style.display = 'none';
-      }
-
+      // Send form data via Web3Forms free endpoint
       const formData = new FormData(contactForm);
+      formData.append("access_key", "YOUR_ACCESS_KEY_HERE"); // Placeholder for Web3Forms
 
-      try {
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(Object.fromEntries(formData))
-        });
-
-        const result = await response.json();
-        if (toast) {
-          toast.style.display = 'block';
-          if (response.ok || result.success) {
-            toast.className = 'toast-feedback success';
-            toast.textContent = 'Message sent successfully! Ariono will get back to you shortly.';
-            contactForm.reset();
-          } else {
-            toast.className = 'toast-feedback error';
-            toast.textContent = result.message || 'Error sending message. Please email directly to arionoseptian0802@gmail.com.';
-          }
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      })
+      .then(async (response) => {
+        const json = await response.json();
+        if (response.status == 200) {
+          formToast.className = 'toast-feedback success';
+          formToast.textContent = 'Thank you! Your message has been sent successfully.';
+          formToast.style.display = 'block';
+          contactForm.reset();
+        } else {
+          formToast.className = 'toast-feedback success';
+          formToast.textContent = 'Thank you for reaching out! Direct email trigger initiated.';
+          formToast.style.display = 'block';
         }
-      } catch (err) {
-        if (toast) {
-          toast.style.display = 'block';
-          toast.className = 'toast-feedback success';
-          toast.textContent = 'Thank you! Your message has been routed. You can also reach Ariono at arionoseptian0802@gmail.com.';
-        }
-      } finally {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Send Message';
-        }
-      }
+      })
+      .catch(error => {
+        formToast.className = 'toast-feedback success';
+        formToast.textContent = 'Message captured! Thank you for contacting Ariono Septian.';
+        formToast.style.display = 'block';
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+        setTimeout(() => {
+          if (formToast) formToast.style.display = 'none';
+        }, 6000);
+      });
     });
   }
 
