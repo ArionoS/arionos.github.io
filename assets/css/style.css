@@ -434,6 +434,11 @@ h1, h2, h3, h4, h5, h6 {
   display: none !important;
 }
 
+#header.header-top .mobile-nav-toggle {
+  position: static;
+  margin-left: auto;
+}
+
 /*--------------------------------------------------------------
 # Navbar
 --------------------------------------------------------------*/
@@ -587,7 +592,12 @@ section.section-show {
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--color-primary);
-  margin-bottom: 6px;
+  margin-bottom: 16px;
+  display: inline-block;
+  padding: 6px 18px;
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  border-radius: 30px;
+  background: rgba(6, 182, 212, 0.05);
 }
 
 .section-title p {
@@ -595,6 +605,36 @@ section.section-show {
   font-weight: 700;
   margin: 0;
   color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    margin-bottom: 25px;
+    text-align: center;
+  }
+  .section-title p {
+    font-size: 1.45rem;
+    line-height: 1.35;
+  }
+  .about-me img {
+    margin-top: 15px;
+  }
+  .about-me .content {
+    text-align: center;
+  }
+  .about-me .content h3 {
+    font-size: 1.4rem;
+  }
+  .about-me ul {
+    display: inline-block;
+    text-align: left;
+  }
+  .about-me ul li {
+    justify-content: flex-start;
+  }
+  section.section-show {
+    padding-top: 20px !important;
+  }
 }
 
 .glass-card {
