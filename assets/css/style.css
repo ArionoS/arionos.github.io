@@ -494,6 +494,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 991px) {
+  #header:not(.header-top) .col-lg-7 {
+    text-align: center;
+  }
+
+  #header:not(.header-top) .hero-cta {
+    justify-content: center;
+  }
+
+  #header:not(.header-top) .social-links {
+    justify-content: center;
+  }
+
   .mobile-nav-toggle {
     display: block;
     position: absolute;
@@ -973,6 +985,29 @@ section.section-show {
   background: var(--color-gradient);
   border-color: transparent;
   box-shadow: 0 4px 15px var(--color-glow);
+}
+
+@media (max-width: 768px) {
+  #portfolio-flters {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding: 5px 15px 12px 15px;
+    margin: 0 -15px 20px -15px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  #portfolio-flters::-webkit-scrollbar {
+    display: none;
+  }
+
+  #portfolio-flters li {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 10px 18px;
+    font-size: 0.85rem;
+  }
 }
 
 .portfolio-wrap {
