@@ -234,7 +234,7 @@
 
   /**
    * Portfolio Isotope Filtering & GLightbox Initialization
-   * Ultra-Smooth 60 FPS Inner Card Scale Animation (Zero Layout Collision)
+   * Clean, Ultra-Smooth In-Place Scale & Fade Animation across EVERY filter tab
    */
   const initPortfolio = () => {
     const portfolioContainer = select('.portfolio-container');
@@ -242,7 +242,7 @@
       window.portfolioIsotopeInstance = new Isotope(portfolioContainer, {
         itemSelector: '.portfolio-item',
         layoutMode: 'fitRows',
-        transitionDuration: '0.4s',
+        transitionDuration: '0.35s',
         hiddenStyle: {
           opacity: 0,
           transform: 'scale(0.85)'
@@ -267,10 +267,14 @@
             filter: filterValue
           });
 
-          // Animate inner .portfolio-wrap elements without touching outer .portfolio-item coordinates
+          // Reset subtle scale-fade animation class on all inner cards
           const allWraps = select('.portfolio-wrap', true);
-          allWraps.forEach(wrap => wrap.classList.remove('filter-animate'));
+          allWraps.forEach(wrap => {
+            wrap.classList.remove('filter-animate');
+            void wrap.offsetWidth; // force DOM reflow
+          });
 
+          // Stagger subtle scale-fade animation for active target cards
           const targetItems = filterValue === '*' 
             ? select('.portfolio-item', true) 
             : select(`.portfolio-item${filterValue}`, true);
@@ -280,7 +284,7 @@
             if (wrap) {
               setTimeout(() => {
                 wrap.classList.add('filter-animate');
-              }, idx * 35);
+              }, idx * 30);
             }
           });
         });
