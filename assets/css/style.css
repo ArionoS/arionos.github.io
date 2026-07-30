@@ -629,8 +629,28 @@ section.section-show {
 }
 
 /* Skills & Technical Expertise */
-.skills .skill-item {
+.skill-category-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
   margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.01em;
+}
+
+.skills .skill-item {
+  margin-bottom: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-card);
+  border-radius: 14px;
+  padding: 16px 18px;
+  transition: all 0.3s ease;
+}
+
+.skills .skill-item:hover {
+  border-color: var(--border-card-hover);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .skills .skill {
@@ -645,23 +665,40 @@ section.section-show {
 .skills .skill i.val {
   font-style: normal;
   color: var(--color-primary);
+  font-weight: 700;
 }
 
 .skills .progress {
-  height: 10px !important;
+  height: 8px !important;
   background: rgba(255, 255, 255, 0.08) !important;
-  border-radius: 5px !important;
+  border-radius: 4px !important;
   overflow: hidden !important;
-  margin-bottom: 0 !important;
+  margin-bottom: 12px !important;
   padding: 0 !important;
   display: block !important;
 }
 
 .skills .progress-bar {
   background: var(--color-gradient) !important;
-  border-radius: 5px !important;
+  border-radius: 4px !important;
   height: 100% !important;
   transition: width 0.8s ease !important;
+}
+
+.skill-tech-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.skill-tech-pills span {
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  color: #38bdf8;
+  padding: 2px 10px;
+  border-radius: 12px;
 }
 
 .tech-icon-box {
