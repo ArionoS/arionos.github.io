@@ -578,12 +578,12 @@ section.section-show {
   opacity: 1 !important;
   visibility: visible !important;
   pointer-events: auto !important;
-  padding-top: 35px !important;
-  padding-bottom: 80px !important;
+  padding-top: 24px !important;
+  padding-bottom: 60px !important;
 }
 
 .section-title {
-  margin-bottom: 35px;
+  margin-bottom: 20px;
 }
 
 .section-title h2 {
@@ -592,16 +592,16 @@ section.section-show {
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--color-primary);
-  margin-bottom: 16px;
+  margin-bottom: 10px;
   display: inline-block;
-  padding: 6px 18px;
+  padding: 5px 16px;
   border: 1px solid rgba(6, 182, 212, 0.25);
   border-radius: 30px;
   background: rgba(6, 182, 212, 0.05);
 }
 
 .section-title p {
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 700;
   margin: 0;
   color: #ffffff;
