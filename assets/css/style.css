@@ -173,14 +173,14 @@ h1, h2, h3, h4, h5, h6 {
 #header {
   transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   z-index: 997;
 }
 
 #header h1 {
-  font-size: 3.8rem;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
   margin: 0 0 14px 0;
   font-weight: 900;
   letter-spacing: -0.03em;
@@ -201,7 +201,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #header h2 {
-  font-size: 1.5rem;
+  font-size: clamp(1.05rem, 2.2vw, 1.5rem);
   font-weight: 400;
   color: var(--text-muted);
   margin-bottom: 24px;
@@ -308,7 +308,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-portrait {
   border-radius: 22px;
-  max-height: 440px;
+  max-height: clamp(280px, 48vh, 440px);
+  width: 100%;
   object-fit: cover;
   display: block;
   background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
@@ -495,12 +496,12 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 991px) {
   #header:not(.header-top) {
-    padding-top: calc(90px + env(safe-area-inset-top, 0px));
+    padding-top: 15px;
   }
 
   #header:not(.header-top) .badge-status {
-    margin-top: 25px;
-    margin-bottom: 24px;
+    margin-top: 0;
+    margin-bottom: 16px;
   }
 
   #header:not(.header-top) .col-lg-7 {
