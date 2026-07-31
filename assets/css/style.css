@@ -1377,3 +1377,75 @@ section.section-show {
   background: rgba(255, 255, 255, 0.07);
   border-color: rgba(6, 182, 212, 0.3);
 }
+
+/*--------------------------------------------------------------
+# GLightbox Premium Dark Glassmorphism Overlay
+--------------------------------------------------------------*/
+.glightbox-container {
+  background: rgba(10, 15, 30, 0.92) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+}
+
+.gslide-media {
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 35px rgba(6, 182, 212, 0.25) !important;
+}
+
+.gslide-description {
+  position: absolute !important;
+  bottom: 24px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  max-width: 90% !important;
+  width: auto !important;
+  background: rgba(15, 23, 42, 0.88) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 30px !important;
+  padding: 10px 24px !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(6, 182, 212, 0.3) !important;
+}
+
+.gslide-description .gdesc-inner {
+  padding: 0 !important;
+  text-align: center !important;
+}
+
+.gslide-title {
+  color: #38bdf8 !important;
+  font-weight: 700 !important;
+  font-size: 0.92rem !important;
+  margin-bottom: 0 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.gslide-desc {
+  color: #e2e8f0 !important;
+  font-size: 0.82rem !important;
+  margin-top: 2px !important;
+}
+
+/* Glassmorphic Navigation Controls */
+.gnext, .gprev, .gclose {
+  background: rgba(15, 23, 42, 0.75) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 50% !important;
+  width: 46px !important;
+  height: 46px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+.gnext:hover, .gprev:hover, .gclose:hover {
+  background: rgba(6, 182, 212, 0.3) !important;
+  border-color: #38bdf8 !important;
+  transform: scale(1.1) !important;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.5) !important;
+}
