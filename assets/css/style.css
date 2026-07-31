@@ -494,6 +494,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 991px) {
+  #header:not(.header-top) {
+    padding-top: calc(90px + env(safe-area-inset-top, 0px));
+  }
+
+  #header:not(.header-top) .badge-status {
+    margin-top: 25px;
+    margin-bottom: 24px;
+  }
+
   #header:not(.header-top) .col-lg-7 {
     text-align: center;
   }
