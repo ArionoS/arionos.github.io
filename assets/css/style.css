@@ -1045,7 +1045,7 @@ section.section-show {
   overflow: hidden;
   position: relative;
   height: 100%;
-  min-height: 440px;
+  min-height: 470px;
   display: flex;
   flex-direction: column;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
@@ -1150,7 +1150,7 @@ section.section-show {
   font-weight: 700;
   margin-bottom: 8px;
   color: #ffffff;
-  min-height: 2.4rem;
+  min-height: 2.2rem;
   display: flex;
   align-items: center;
 }
@@ -1159,16 +1159,19 @@ section.section-show {
   color: var(--text-muted);
   font-size: 0.85rem;
   margin-bottom: 14px;
-  line-height: 1.5;
-  flex-grow: 1;
+  line-height: 1.55;
+  min-height: 84px;
+  display: block;
 }
 
 .portfolio-tags {
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 14px;
+  align-items: flex-start;
+  align-content: flex-start;
+  min-height: 62px;
+  margin-top: auto;
 }
 
 .portfolio-tag {
