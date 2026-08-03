@@ -1112,13 +1112,16 @@ section.section-show {
   height: 220px;
   object-fit: cover;
   object-position: top center;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  image-rendering: high-quality;
+  transform: translateZ(0);
+  backface-visibility: hidden;
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .portfolio-wrap:hover img {
-  transform: scale(1.04);
+  transform: scale(1.04) translateZ(0);
 }
 
 .portfolio-swiper {
@@ -1130,11 +1133,11 @@ section.section-show {
 
 /* Lightbox High-Resolution Crisp Image View */
 .gslide-media img {
-  max-height: 88vh !important;
+  max-height: 90vh !important;
   width: auto !important;
   object-fit: contain !important;
-  image-rendering: -webkit-optimize-contrast !important;
-  image-rendering: crisp-edges !important;
+  -webkit-font-smoothing: antialiased;
+  image-rendering: high-quality !important;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
 }
 
