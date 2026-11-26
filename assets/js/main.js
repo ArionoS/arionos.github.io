@@ -148,6 +148,9 @@
       }
     });
 
+    // Reset window scroll so fixed section views align cleanly under header
+    window.scrollTo({ top: 0, behavior: 'auto' });
+
     // Re-layout Isotope smoothly if navigating to portfolio
     if (hash === '#portfolio' && window.portfolioIsotopeInstance) {
       setTimeout(() => {
@@ -160,11 +163,11 @@
     }
   };
 
-  // Nav click handlers
+  // Nav, Hero CTA & Service CTA click handlers
   navLinks.forEach(link => {
     link.addEventListener('click', function(e) {
       const hash = this.getAttribute('href');
-      if (hash.startsWith('#')) {
+      if (hash && hash.startsWith('#')) {
         e.preventDefault();
         window.location.hash = hash;
         showSection(hash);
@@ -178,6 +181,27 @@
             toggle.classList.toggle('bi-x');
           }
         }
+      }
+    });
+  });
+
+  select('.hero-cta a[href^="#"], .service-cta', true).forEach(cta => {
+    cta.addEventListener('click', function(e) {
+      const hash = this.getAttribute('href');
+      if (hash && hash.startsWith('#')) {
+        e.preventDefault();
+        window.location.hash = hash;
+        showSection(hash);
+
+        const inquiryVal = this.getAttribute('data-inquiry');
+        const subjectVal = this.getAttribute('data-subject');
+        const inquirySelect = select('#inquiryType');
+        const subjectInput = select('#subject');
+        const msgInput = select('#contactForm textarea[name="message"]');
+
+        if (inquirySelect && inquiryVal) inquirySelect.value = inquiryVal;
+        if (subjectInput && subjectVal) subjectInput.value = subjectVal;
+        if (msgInput) setTimeout(() => msgInput.focus(), 120);
       }
     });
   });
@@ -354,6 +378,7 @@
 
       const name = contactForm.querySelector('#name')?.value || '';
       const email = contactForm.querySelector('#email')?.value || '';
+      const inquiryType = contactForm.querySelector('#inquiryType')?.value || '';
       const subject = contactForm.querySelector('#subject')?.value || '';
       const message = contactForm.querySelector('textarea[name="message"]')?.value || '';
 
@@ -363,7 +388,8 @@
       const payload = {
         name,
         email,
-        subject,
+        inquiryType,
+        subject: inquiryType ? `[${inquiryType}] ${subject}` : subject,
         message,
         createdAt: new Date().toISOString(),
         timestamp: Date.now()

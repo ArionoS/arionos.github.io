@@ -5,8 +5,8 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Project Details | Ariono Septian Portfolio</title>
-  <meta content="Project details and technical architecture overview." name="description">
+  <title>Architecture Case Studies | Ariono Septian Portfolio</title>
+  <meta content="Deep-dive engineering case studies covering PLN DAILY (37,000+ users), Fuel & SOE Enterprise Systems, and Digital Pembangkit Mobile Telemetry." name="description">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -17,87 +17,153 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <!-- CDN Vendor CSS Files -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css" rel="stylesheet" crossorigin="anonymous">
 
   <!-- Modern Design System CSS -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <style>
+    .case-copy {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+    .case-stage {
+      height: 290px;
+      border-radius: 12px;
+    }
+  </style>
 </head>
 
-<body style="padding-top: 40px;">
+<body style="padding: 36px 0 60px;">
 
   <main id="main">
-    <div id="portfolio-details" class="portfolio-details">
-      <div class="container">
+    <div class="container">
 
-        <div class="mb-4">
-          <a href="index.html#portfolio" class="btn-outline-custom">
-            <i class="bi bi-arrow-left"></i> Back to Portfolio
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <a href="index.html#portfolio" class="btn-outline-custom">
+          <i class="bi bi-arrow-left"></i> Back to Portfolio
+        </a>
+        <div class="d-flex flex-wrap gap-2">
+          <a href="resume.html" class="btn-outline-custom">
+            <i class="bi bi-file-text"></i> 2-Page ATS CV
+          </a>
+          <a href="index.html#contact" class="btn-primary-custom">
+            <i class="bi bi-envelope"></i> Discuss Project / Role
           </a>
         </div>
+      </div>
 
-        <div class="row g-4">
-          <div class="col-lg-8">
-            <h2 class="portfolio-title h3 font-weight-bold text-white mb-3">Enterprise Software &amp; Application Architecture</h2>
+      <div class="section-title mb-4">
+        <h2>Case Studies</h2>
+        <p>Architecture, Scale &amp; Security Outcomes</p>
+      </div>
 
-            <div class="portfolio-details-slider swiper rounded-3 overflow-hidden border border-secondary">
-              <div class="swiper-wrapper align-items-center">
-
-                <div class="swiper-slide">
-                  <img src="assets/img/portfolio/portfolio-details-1.jpg" class="img-fluid w-100" alt="Project Screenshot 1">
-                </div>
-
-                <div class="swiper-slide">
-                  <img src="assets/img/portfolio/portfolio-details-2.jpg" class="img-fluid w-100" alt="Project Screenshot 2">
-                </div>
-
-                <div class="swiper-slide">
-                  <img src="assets/img/portfolio/portfolio-details-3.jpg" class="img-fluid w-100" alt="Project Screenshot 3">
-                </div>
-
-              </div>
-              <div class="swiper-pagination"></div>
+      <!-- Case Study 1: PLN DAILY -->
+      <article class="glass-card mb-4">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-6">
+            <div class="portfolio-media-stage case-stage">
+              <a href="assets/img/portfolio/pln-daily-1.webp" data-gallery="casePLNDaily" class="portfolio-lightbox" title="PLN DAILY Reengineering - Modern Next.js &amp; Golang Monitoring Portal">
+                <img src="assets/img/portfolio/pln-daily-1.webp" class="img-fluid" alt="PLN DAILY Next.js & Golang Dashboard" loading="eager" decoding="sync">
+              </a>
             </div>
           </div>
-
-          <div class="col-lg-4">
-            <div class="glass-card">
-              <h3 class="h4 text-primary font-weight-bold mb-3">Project Specifications</h3>
-              <ul class="list-unstyled text-muted font-size-sm">
-                <li class="mb-2"><strong class="text-white">Category:</strong> Web &amp; Mobile Software Architecture</li>
-                <li class="mb-2"><strong class="text-white">Tech Stack:</strong> PHP, Laravel, Flutter, MySQL, Docker</li>
-                <li class="mb-2"><strong class="text-white">Repository:</strong> <a href="https://github.com/ArionoS" target="_blank" rel="noopener">github.com/ArionoS</a></li>
-              </ul>
-
-              <hr class="border-secondary my-3">
-
-              <p class="text-muted small">
-                High-performance application engineered with modular architecture, clean RESTful endpoints, secure data persistence, and responsive UI components.
-              </p>
+          <div class="col-lg-6">
+            <span class="badge-status mb-2" style="margin-bottom: 10px !important;">Case Study 01 · Enterprise Scale (37,000+ Employees)</span>
+            <h3 class="h4 text-white fw-bold mb-2">PLN DAILY HR &amp; Overtime Reengineering</h3>
+            <p class="case-copy mb-3">
+              <strong class="text-white">Challenge:</strong> Modernize PT PLN's core enterprise HR and employee assessment platform serving 37,000+ employees across attendance, shift scheduling, overtime workflows, and SAP S/4HANA synchronization while removing legacy bottlenecks.
+            </p>
+            <p class="case-copy mb-3">
+              <strong class="text-white">Architecture Decisions:</strong> Built production modules in Vue.js backed by 4 Lumen Laravel APIs, then led the strategic reengineering to <strong class="text-white">Next.js + TypeScript</strong> (frontend) and <strong class="text-white">Golang</strong> microservices (backend) with restructured relational schemas, strict API versioning, and clean architecture boundaries.
+            </p>
+            <div class="portfolio-tags">
+              <span class="portfolio-tag">Next.js</span>
+              <span class="portfolio-tag">TypeScript</span>
+              <span class="portfolio-tag">Golang</span>
+              <span class="portfolio-tag">Vue.js</span>
+              <span class="portfolio-tag">Lumen</span>
+              <span class="portfolio-tag">SAP S/4HANA</span>
             </div>
           </div>
         </div>
+      </article>
 
-      </div>
+      <!-- Case Study 2: Fuel Management & SOE -->
+      <article class="glass-card mb-4">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-6 order-lg-2">
+            <div class="portfolio-media-stage case-stage">
+              <a href="assets/img/portfolio/fuel-web-1.webp" data-gallery="caseFuel" class="portfolio-lightbox" title="Fuel Management Web Portal - Digital Wallet &amp; Fleet Auditing">
+                <img src="assets/img/portfolio/fuel-web-1.webp" class="img-fluid" alt="Fuel Management Web Portal" loading="eager" decoding="sync">
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-6 order-lg-1">
+            <span class="badge-status mb-2" style="margin-bottom: 10px !important;">Case Study 02 · Multi-App Utility Operations (3,000+ Users)</span>
+            <h3 class="h4 text-white fw-bold mb-2">Fuel Management, SOE &amp; Regional Web/Mobile Suite</h3>
+            <p class="case-copy mb-3">
+              <strong class="text-white">Challenge:</strong> Standardize fragmented operational reporting across Eastern Indonesia utility units (Kalimantan, Sulawesi, Maluku, Papua) covering fleet fuel balances, SPBU transactions, SOE compliance, and customer complaints.
+            </p>
+            <p class="case-copy mb-3">
+              <strong class="text-white">Architecture &amp; Security:</strong> Engineered 10 enterprise web apps and 5 Flutter mobile apps (including Fuel Management for 1,000+ users, SOE for 2,000+ users, HRIS, CRM, and FICO tax management), paired with <strong class="text-white">FortiGate firewall</strong> hardening and secure network topologies.
+            </p>
+            <div class="portfolio-tags">
+              <span class="portfolio-tag">Laravel</span>
+              <span class="portfolio-tag">Flutter &amp; Dart</span>
+              <span class="portfolio-tag">MySQL</span>
+              <span class="portfolio-tag">FortiGate Security</span>
+              <span class="portfolio-tag">REST API</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Case Study 3: Digital Pembangkit & Telemetry -->
+      <article class="glass-card">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-6">
+            <div class="portfolio-media-stage case-stage">
+              <a href="assets/img/portfolio/digital-pembangkit-1.webp" data-gallery="casePembangkit" class="portfolio-lightbox" title="Digital Pembangkit Mobile - Interactive GIS Map &amp; Power Unit Telemetry">
+                <img src="assets/img/portfolio/digital-pembangkit-1.webp" class="img-fluid" alt="Digital Pembangkit GIS Mobile App" loading="eager" decoding="sync">
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <span class="badge-status mb-2" style="margin-bottom: 10px !important;">Case Study 03 · Field Telemetry &amp; Leadership (1,400+ Units)</span>
+            <h3 class="h4 text-white fw-bold mb-2">Digital Pembangkit &amp; Flutter Delivery Leadership</h3>
+            <p class="case-copy mb-3">
+              <strong class="text-white">Challenge:</strong> Give operations leadership real-time visibility into 1,400+ power generation units (Normal, Siaga, Defisit capacity) across vast regional territories directly from mobile devices.
+            </p>
+            <p class="case-copy mb-3">
+              <strong class="text-white">Execution:</strong> Delivered GIS map clustering, live machine status analytics, and regional AMC tables in <strong class="text-white">Flutter</strong>, alongside leading a <strong class="text-white">7-engineer team</strong> at PT SINTECH INDONESIA across cross-divisional sprint batches.
+            </p>
+            <div class="portfolio-tags">
+              <span class="portfolio-tag">Flutter</span>
+              <span class="portfolio-tag">GIS Mapping</span>
+              <span class="portfolio-tag">IoT Telemetry</span>
+              <span class="portfolio-tag">Team Lead (7 Engineers)</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
     </div>
   </main>
 
-  <div class="credits text-center py-4">
-    <p>&copy; Ariono Septian. All Rights Reserved.</p>
-  </div>
-
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-  <!-- Main JS -->
-  <script src="assets/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/js/glightbox.min.js" crossorigin="anonymous" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof GLightbox !== 'undefined') {
+        GLightbox({ selector: '.portfolio-lightbox' });
+      }
+    });
+  </script>
 
 </body>
 </html>
